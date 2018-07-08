@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Apple-like Gallery Slideshow</title>
+</head>
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  html {
+    background-color: #eee;
+  }
+  h1 {
+    padding: 50px;
+    text-align: center;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  div.slideshow {
+    border: 2px solid #eee;
+    background-color: tomato;
+    margin: auto;
+    width: 920px;
+    height: 400px;
+    margin-bottom: 100px;
+  }
+
+  div.images-wrapper {
+    overflow: hidden;
+  }
+
+  ul.images {
+    display: flex;
+    transition: all 1s;
+  }
+  div.buttons-wrapper {
+    text-align: center;
+    background: linear-gradient(to bottom, rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%);
+  }
+  ul.buttons {
+    display: inline-block;
+  }
+  ul.buttons li {
+    padding: 10px 30px;
+    float: left;
+    border-left: 1px solid #aaa;
+  }
+
+  ul.buttons li:last-child {
+    border-right: 1px solid #aaa;
+  }
+
+  .activeButton {
+    background-color: #aaa;
+  }
+
+</style>
+<body>
+  <h1>Apple-like Gallery Slideshow</h1>
+  <div class="slideshow">
+    <div class="images-wrapper">
+      <ul class="images">
+        <li><a href="#"><img src="./images/imac.jpg"></a></li>
+        <li><a href="#"><img src="./images/macbook.jpg"></a></li>
+        <li><a href="#"><img src="./images/iphone.jpg"></a></li>
+        <li><a href="#"><img src="./images/info.jpg."></a></li>
+      </ul>
+    </div>
+    <div class="buttons-wrapper">
+      <ul class="buttons">
+        <li class="activeButton"><a><img src="./images/thumb_imac.png"></a></li>
+        <li><a><img src="./images/thumb_macbook.png" style="width: 24px; height: 24;"></a></li>
+        <li><a><img src="./images/thumb_iphone.png"></a></li>
+        <li><a><img src="./images/thumb_about.png"></a></li>
+      </ul>
+    </div>
+  </div>
+<script>
+
+const imagesWrapper = document.querySelector('ul.images');
+const allButtons = document.querySelectorAll('ul.buttons > li');
+let timer = null;
+let currentIndex = 1;
+const imagesSlider = function() {
+  let value = currentIndex % 4;
+  imagesWrapper.style.transform = `translateX(${-920 * value}px)`;
+  currentIndex++;
+  buttonRender(allButtons[value])
+};
+
+const buttonRender = function(index) {
+  allButtons.forEach(function(item) {
+    if (item != index) {
+      item.classList.remove('activeButton');
+    } else {
+      item.classList.add('activeButton')
+    }
+  });
+}
+
+timer = setInterval(imagesSlider, 1500);
+
+
+allButtons.forEach(function(item, index) {
+  allButtons[index].onclick = function(event) {
+    clearInterval(timer);
+    currentIndex = index;
+    imagesSlider();
+    timer = setInterval(imagesSlider, 1500);
+  }
+})
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
