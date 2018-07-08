@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Floating Layer JavaScript Implementation</title>
+  <style>
+    html {
+      height: 100%;
+      font-family: Helvetica;
+    }
+    
+    .floating-layer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .inner-wrapper {
+      border: 1px solid tomato;
+      border-top-width: 20px;
+      padding: 20px;
+    }
+
+    .close-button,
+    .floating-layer {
+      display: none;
+    }
+    
+    .show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-layer-wrapper">
+    <h1>Floating Layer</h1>
+    <ul>
+      <li>Click button to show floating layer.</li>
+      <li>Click page except floating layer area to close.</li>
+      <li>Close feature unvailable when click floating layer.</li>
+      <li>Floating layer hidden when click button again.</li>
+    </ul>
+    <button class="open-button">Open Floating Layer</button>
+    <button class="close-button">Close Floating Layer</button>
+    <div class="floating-layer">
+      <div class="inner-wrapper"> 
+        <h2>This is a floating layer.</h2>
+        <button class="close">Close</button>
+      </div>
+    </div>
+  </div>
+<script>
+
+const floatingLayer = document.querySelector('.floating-layer');
+const innerWrapper = document.querySelector('.inner-wrapper');
+const openLayerButton = document.querySelector('.open-button');
+const closeLayerButton = document.querySelector('.close-button');
+const closeButton = document.querySelector('.close');
+let isLayerDisplay = false;
+
+document.addEventListener('click', function(event) {
+  if (event.target === openLayerButton) {
+    var methodName = isLayerDisplay ? 'remove' : 'add'; 
+    floatingLayer.classList[methodName]('show');
+    isLayerDisplay = !isLayerDisplay;
+    if (isLayerDisplay) {
+      document.body.style.backgroundColor = 'lightblue';
+      innerWrapper.style.backgroundColor = '#fff';
+    }
+    toggleFloatingLayerButton();
+    event.stopPropagation();
+    return;
+  }
+  if (isLayerDisplay && event.target !== 'innerWrapper') {
+    floatingLayer.classList.remove('show');
+    isLayerDisplay = !isLayerDisplay;
+    document.body.style.backgroundColor = '';
+    toggleFloatingLayerButton();
+    event.stopPropagation();
+    return;
+  }
+}, false);
+
+innerWrapper.addEventListener('click', function(event) {
+  if (event.target === closeButton) return;
+  event.stopPropagation();
+}, false);
+
+const toggleFloatingLayerButton = function() {
+  const toggle = [['block', 'none'], ['none', 'block']];
+  openLayerButton.style.display = toggle[+isLayerDisplay][0];
+  closeLayerButton.style.display = toggle[+isLayerDisplay][1];
+}
+</script>
+</body>
+</html>
