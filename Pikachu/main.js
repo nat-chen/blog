@@ -1,19 +1,6 @@
 (function () {
   let duration = 50;
-  let styleText = `.view-wrapper {
-    width: 50%;
-  }
-  
-  .code-wrapper {
-    position: absolute;
-    left: 50%;
-    width: 50%;
-    height: 100vh;
-    border: 1px solid red;
-    background: #eee;
-  }
-  
-  .view {
+  let styleText = `.view {
     width: 100%;
     height: 165px;
     position: relative;
@@ -147,27 +134,11 @@
     right: 30px;
     display: flex;
     flex-direction: column;
-  }
-  
-  button {
-    outline: none;
-    background:#3fb0ac;
-    padding: 4px 6px;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-  
-  button:focus {
-    outline: none;
-    box-shadow: 1px 1px 1px #9ad3de;
-    font-weight: bold;
-    border: 1px solid #173e43;
-  }`
+  }` 
 
   let currentIndex = 1;
   let styleTextLength = styleText.length;
+  const codeWrapper = document.querySelector('.code-wrapper');
 
   const buttons = document.querySelector('.code-actionButton');
   buttons.addEventListener('click', (event) => {
@@ -192,7 +163,7 @@
       let text = styleText.substring(0, currentIndex++);
       document.querySelector('#style').innerText = text;
       document.querySelector('.code-text').innerText = text;
-      window.scrollTop = window.scrollHeight;
+      codeWrapper.scrollTop = codeWrapper.scrollHeight;
       setTimeout(run, duration);
     } 
   }, duration);
