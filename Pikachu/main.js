@@ -1,6 +1,7 @@
 (function () {
   let duration = 50;
-  let styleText = `.view {
+  let styleText = `
+  .view {
     width: 100%;
     height: 165px;
     position: relative;
